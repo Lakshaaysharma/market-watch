@@ -34,6 +34,10 @@ npm run build && HOST=0.0.0.0 npm start    # then visit http://<your-computer-ip
 
 Add `?debug` to the URL to see render counts per second and an outline on every cell that re-renders.
 
+## Deploy
+
+[`render.yaml`](render.yaml) describes the service for [Render](https://render.com): in the dashboard choose **New → Blueprint** and select this repository. On any other Node host, build with `npm ci --include=dev && npm run build`, start with `npm start`, and set `HOST=0.0.0.0`. The host must allow WebSockets. Run a single instance.
+
 ## Configuration
 
 Environment variables read by the server. Invalid values stop start-up with a clear message.
