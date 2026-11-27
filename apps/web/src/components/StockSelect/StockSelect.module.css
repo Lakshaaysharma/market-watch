@@ -1,0 +1,123 @@
+.toolbar { display: flex; flex: none; align-items: center; height: 103px; padding: 0 27px; }
+
+.label { flex: none; width: 161px; font-size: 19px; font-weight: 600; color: #05042f; }
+
+.select { position: relative; width: 588px; max-width: 100%; min-width: 0; }
+
+.control {
+  display: flex;
+  align-items: center;
+  height: 58px;
+  padding: 0 7px 0 11px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 11px;
+  background: var(--surface);
+  cursor: pointer;
+}
+.control[data-open='true'] { border-color: var(--accent); }
+
+.chips { display: flex; flex: 1; gap: 9px; min-width: 0; overflow: hidden; }
+
+.chip {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  height: 39px;
+  padding: 0 13px;
+  border-radius: 14px;
+  background: var(--chip-bg);
+  font-size: 17.5px;
+  white-space: nowrap;
+}
+.chip button { display: grid; place-items: center; width: 24px; height: 28px; margin-right: -5px; padding: 0; border: 0; background: none; }
+.chip svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
+
+.placeholder { color: var(--muted); font-size: 16px; }
+
+.chevron { display: grid; flex: none; place-items: center; width: 40px; height: 40px; padding: 0; border: 0; background: none; }
+.chevron svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.15s; }
+.chevron[aria-expanded='true'] svg { transform: rotate(180deg); }
+
+.backdrop { display: none; }
+
+.panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  left: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  max-height: min(440px, calc(100dvh - 200px));
+  min-height: 240px;
+  padding: 10px 0 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 14px 36px rgb(29 36 61 / 18%);
+}
+
+.search { flex: none; height: 40px; margin: 0 12px; padding: 0 12px; border: 1px solid var(--line-strong); border-radius: 8px; font-size: 16px; }
+
+.actions { display: flex; flex: none; align-items: center; gap: 6px; padding: 6px 12px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+.actions span { margin-right: auto; }
+.actions button { padding: 6px 8px; border: 0; border-radius: 6px; background: none; color: var(--accent); font-weight: 600; }
+.actions button:disabled { color: #b4b7cc; cursor: default; }
+
+.list { flex: 1; min-height: 0; margin: 0; padding: 4px 0; overflow-y: auto; list-style: none; overscroll-behavior: contain; }
+.list li[role='option'] { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 6px 14px; cursor: pointer; font-size: 14px; }
+.list li[data-active='true'] { background: var(--head-bg); }
+.list li[aria-disabled='true'] { opacity: 0.45; cursor: default; }
+.list b { flex: none; min-width: 112px; font-weight: 600; }
+.list span { overflow: hidden; color: var(--muted); text-overflow: ellipsis; white-space: nowrap; }
+.list i { position: relative; flex: none; width: 18px; height: 18px; border: 1.5px solid #b9bcd4; border-radius: 5px; }
+.list li[aria-selected='true'] i { border-color: var(--accent); background: var(--accent); }
+.list li[aria-selected='true'] i::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 4px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.note { margin: 0; padding: 10px 14px; color: var(--muted); font-size: 13px; }
+
+.done { display: none; }
+
+/* Phones held sideways. */
+@media (max-height: 500px) and (min-width: 640px) {
+  .toolbar { height: 56px; padding: 0 16px; }
+  .label { width: 130px; font-size: 15px; }
+  .control { height: 42px; }
+  .chip { height: 30px; font-size: 13.5px; }
+  .panel { position: fixed; top: 8px; bottom: 8px; right: auto; left: 146px; width: 480px; max-height: none; min-height: 0; }
+}
+
+@media (max-width: 639px) {
+  .toolbar { flex-direction: column; align-items: stretch; gap: 6px; height: auto; padding: 10px 12px 12px; }
+  .label { width: auto; font-size: 14px; }
+  .select { width: 100%; }
+  .control { height: 46px; padding: 0 3px 0 7px; }
+  .chips { gap: 6px; }
+  .chip { height: 32px; padding: 0 10px; border-radius: 11px; font-size: 13px; }
+
+  /* The list becomes a bottom sheet. */
+  .backdrop { display: block; position: fixed; inset: 0; z-index: 29; background: rgb(12 11 57 / 40%); }
+  .panel { position: fixed; top: auto; bottom: 0; max-height: 78dvh; height: 78dvh; border-radius: 16px 16px 0 0; }
+  .done {
+    display: block;
+    flex: none;
+    height: 46px;
+    margin: 8px 12px calc(10px + env(safe-area-inset-bottom));
+    border: 0;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+}

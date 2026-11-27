@@ -1,0 +1,93 @@
+.header {
+  display: flex;
+  flex: none;
+  align-items: center;
+  height: 75px;
+  padding: 0 14px 0 31px;
+  border-radius: 10px 10px 0 0;
+  background: var(--navy);
+  color: #fff;
+}
+
+.logo { flex: none; width: 47px; height: 45px; color: var(--accent); }
+
+.title {
+  margin: 0 0 0 32px;
+  font-size: 29.5px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+}
+
+.meta { display: flex; align-items: center; margin-left: auto; font-size: 17px; }
+
+.status { display: flex; align-items: center; gap: 13px; white-space: nowrap; }
+.status i { width: 14px; height: 14px; border-radius: 50%; background: var(--live); }
+.status[data-status='connecting'] i,
+.status[data-status='reconnecting'] i { background: var(--warn); }
+.status[data-status='offline'] i { background: var(--down); }
+
+.divider { width: 1px; height: 18px; margin: 0 20px; background: rgb(255 255 255 / 35%); }
+
+.clock { display: flex; gap: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.refresh {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-left: 31px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: #fff;
+}
+.refresh:hover { background: rgb(255 255 255 / 10%); }
+.refresh svg {
+  width: 33px;
+  height: 33px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.6s ease;
+}
+
+@media (max-width: 639px) {
+  .header { height: 56px; padding: 0 4px 0 12px; border-radius: 0; }
+  .logo { width: 28px; height: 27px; }
+  .title { margin-left: 10px; font-size: 18px; }
+  .meta { font-size: 11.5px; }
+  .status { gap: 5px; }
+  .status i { width: 8px; height: 8px; }
+  .divider { height: 22px; margin: 0 8px; }
+  .clock { flex-direction: column; gap: 0; line-height: 1.35; }
+  .refresh { width: 40px; margin-left: 2px; }
+  .refresh svg { width: 22px; height: 22px; }
+}
+
+/* Very narrow phones: drop the date, keep the time. */
+@media (max-width: 374px) {
+  .clock span:first-child { display: none; }
+  .title { font-size: 16px; }
+}
+
+@media (max-width: 339px) {
+  .header { padding-left: 8px; }
+  .logo { display: none; }
+  .title { margin-left: 0; }
+}
+
+/* Phones held sideways. */
+@media (max-height: 500px) {
+  .header { height: 48px; }
+  .logo { width: 28px; height: 27px; }
+  .title { margin-left: 12px; font-size: 19px; }
+  .refresh { height: 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .refresh svg { transition: none; }
+}

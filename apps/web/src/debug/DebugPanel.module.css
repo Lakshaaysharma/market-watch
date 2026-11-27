@@ -1,0 +1,14 @@
+.panel {
+  position: fixed;
+  right: 12px;
+  bottom: 24px;
+  z-index: 40;
+  display: grid;
+  gap: 2px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgb(29 36 61 / 92%);
+  color: #fff;
+  font: 12px/1.5 ui-monospace, Menlo, monospace;
+  pointer-events: none;
+}

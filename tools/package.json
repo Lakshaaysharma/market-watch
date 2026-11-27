@@ -1,0 +1,17 @@
+{
+  "name": "@market/tools",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "load-test": "tsx load-test.ts"
+  },
+  "dependencies": {
+    "@market/shared": "1.0.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.5.13",
+    "tsx": "^4.19.0",
+    "@types/node": "^22.10.0"
+  }
+}
