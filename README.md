@@ -150,6 +150,10 @@ npm run load-test -- --clients 50     # terminal 2
 
 For D, start the server with `STOCK_COUNT=500 TICK_MS=100 UPDATE_RATIO=1` and run the test with `--clients 50 --min 500 --max 500`.
 
+### On the hosted deployment
+
+Render free instance, 50 clients for 20 s, load generator in India, network round trip 272 ms. Delay is corrected for the clock difference between the two machines: median 133 ms, 95th percentile 357 ms, 99th percentile 571 ms, maximum 1.7 s. About 1.1% CPU and 82 MB memory on the server; no wrong-stock deliveries, missing data or disconnects. The median is about half the round trip, so most of the delay is network distance.
+
 ## Browser smoothness
 
 Headless Chrome on the same machine, a tick every 100 ms, half the stocks changing, sampled for 6 s.

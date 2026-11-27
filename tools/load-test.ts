@@ -42,6 +42,35 @@ const totals = { messages: 0, bytes: 0, updates: 0, violations: 0, disconnects: 
 const latencies: number[] = [];
 let measuring = false;
 let finishing = false;
+let clockOffsetMs = 0;
+
+/**
+ * Server clock minus local clock, from the fastest of several ping round trips.
+ * Needed to measure delay when the server is on another machine.
+ */
+function measureClock(): Promise<{ offsetMs: number; rttMs: number }> {
+  return new Promise((resolve, reject) => {
+    const socket = new WebSocket(http.replace(/^http/, 'ws') + WS_PATH);
+    let best = { offsetMs: 0, rttMs: Number.POSITIVE_INFINITY };
+    let remaining = 10;
+    let sentAt = 0;
+    const ping = () => {
+      sentAt = Date.now();
+      socket.send(JSON.stringify({ t: 'ping' } satisfies ClientMessage));
+    };
+    socket.once('error', reject);
+    socket.on('message', (raw) => {
+      const message = JSON.parse(raw.toString()) as ServerMessage;
+      if (message.t === 'hello') return ping();
+      if (message.t !== 'pong') return;
+      const rttMs = Date.now() - sentAt;
+      if (rttMs < best.rttMs) best = { rttMs, offsetMs: Math.round(message.ts - (sentAt + rttMs / 2)) };
+      if ((remaining -= 1) > 0) return ping();
+      socket.close();
+      resolve(best);
+    });
+  });
+}
 
 function pick(symbols: string[], count: number): string[] {
   const pool = [...symbols];
@@ -97,7 +126,7 @@ class Client {
               totals.messages += 1;
               totals.bytes += text.length;
               totals.updates += message.d.length;
-              latencies.push(Date.now() - message.ts);
+              latencies.push(Date.now() + clockOffsetMs - message.ts);
             }
           }
         }
@@ -131,6 +160,8 @@ class Client {
 
 async function main(): Promise<void> {
   const catalog = (await getJson<StockInfo[]>('/api/stocks')).map((stock) => stock.symbol);
+  const clock = await measureClock();
+  clockOffsetMs = clock.offsetMs;
   const clients = Array.from({ length: clientCount }, () => new Client(catalog));
   for (let i = 0; i < clients.length; i += 25) {
     await Promise.all(clients.slice(i, i + 25).map((client) => client.connect()));
@@ -161,6 +192,7 @@ async function main(): Promise<void> {
     ['Tick messages per second', Math.round(totals.messages / seconds)],
     ['Stock updates per second', Math.round(totals.updates / seconds)],
     ['Data sent', `${(totals.bytes / seconds / 1048576).toFixed(2)} MB/s`],
+    ['Network round trip (ping)', `${clock.rttMs} ms`],
     ['Latency p50 / p95 / p99 / max', `${percentile(50)} / ${percentile(95)} / ${percentile(99)} / ${latencies.at(-1)} ms`],
     ['Server CPU (one core = 100%)', `${(((after.cpuSeconds - before.cpuSeconds) / seconds) * 100).toFixed(1)}%`],
     ['Server memory (RSS)', `${after.memoryMb.rss} MB`],
