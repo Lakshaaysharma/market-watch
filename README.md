@@ -179,8 +179,8 @@ Throttled desktop hardware is not a real phone; test on a device before relying 
 |---|---|
 | Rows | The table shows exactly the selected stocks. The mock shows 5 selected but 9 rows, so the "+N" chip differs |
 | Row height | Uniform 59 px; the mock's rows vary between about 53 and 71 px |
-| Extra columns | Open, Prev. Close, Change ₹, Bid, Ask and Avg. Price were added after 52W Low, giving the horizontal scroll the mock's scrollbar implies |
-| Blank column | The empty column after Change % is reproduced on tablet and desktop, and omitted on phones |
+| Extra columns | Change ₹, Bid, Ask and Avg. Price were added after Change %, and Open and Prev. Close after 52W Low, giving the horizontal scroll the mock's scrollbar implies |
+| Blank column | The mock's empty column after Change % is left out; those four columns take its place |
 | Phones | No mobile design was supplied: narrower sticky columns, a two-line header clock and a bottom-sheet stock list |
 | Very narrow screens | Below 375 px the header shows the time without the date |
 | Sorting | Symbol, LTP and Change %: ascending, descending, then selection order. Live sorts re-order at most once a second |

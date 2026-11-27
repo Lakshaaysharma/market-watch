@@ -32,8 +32,6 @@ export const StockRow = memo(function StockRow({ symbol, name, columns }: Props)
             );
           case 'percent':
             return <PercentCell key={column.id} symbol={symbol} />;
-          case 'spacer':
-            return <td key={column.id} aria-hidden="true" />;
           case 'value':
             return (
               <ValueCell

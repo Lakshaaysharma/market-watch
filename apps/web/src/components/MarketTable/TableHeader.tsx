@@ -22,7 +22,6 @@ export const TableHeader = memo(function TableHeader({ columns, sort, onSort }: 
               data-column={column.id}
               className={index < STICKY_COUNT ? styles[`sticky${index}`] : undefined}
               aria-sort={direction ? (direction === 'asc' ? 'ascending' : 'descending') : undefined}
-              aria-hidden={column.kind === 'spacer' || undefined}
             >
               {column.sortKey ? (
                 <button type="button" className={styles.sort} onClick={() => onSort(column.sortKey!)}>

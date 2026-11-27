@@ -4,11 +4,11 @@ import { MarketContext } from '../../app/market-context';
 import { renderStats } from '../../debug/render-stats';
 import { createHarness } from '../../test/fake-socket';
 import { quote } from '../../test/fixtures';
-import { columnsFor } from './columns';
+import { COLUMNS } from './columns';
 import { MarketTable } from './MarketTable';
 
 const names = new Map([['TCS', 'Tata'], ['INFY', 'Infosys'], ['SBIN', 'SBI']]);
-const LIVE_CELLS_PER_ROW = columnsFor('desktop').filter((c) => c.kind === 'value' || c.kind === 'percent').length;
+const LIVE_CELLS_PER_ROW = COLUMNS.filter((c) => c.kind === 'value' || c.kind === 'percent').length;
 
 /** These tests are the proof of the assignment's key performance requirement. */
 describe('MarketTable rendering', () => {
