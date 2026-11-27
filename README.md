@@ -13,7 +13,7 @@ npm install
 npm run dev        # http://localhost:5173
 ```
 
-For production, run `npm run build && npm start` and open http://127.0.0.1:3000. Tests run with `npm test`, and settings are listed in `.env.example`.
+For production, run `npm run build && npm start`. Tests run with `npm test`, and settings are listed in `.env.example`.
 
 ## How it works
 
